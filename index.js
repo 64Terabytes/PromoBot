@@ -1,3 +1,9 @@
+
+
+const authProvider = process.env['twitchClientID'] + process.env['twitchClientSecret']
+
+console.log(authProvider)
+
 const discord = require("discord.js")
 const client = new discord.Client({
   intents: [
@@ -6,6 +12,13 @@ const client = new discord.Client({
   ]
 })
 
+
+
+
+
+
+
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
@@ -13,7 +26,7 @@ client.on('ready', () => {
 const ChannelID = "952482286555783209"
 
 client.on("messageCreate", (message) => {
-  if (message.content == "hi"){
+  if (message.content == "hi") {
     message.guild.channels.cache.get(ChannelID).send(`When the imposter is sus`)
   }
 })
