@@ -1,12 +1,8 @@
-const https = require('https')
-
-
-
-
+const request = require('request');
 const clientId = process.env['twitchClientID'];
 const clientSecret = process.env['twitchClientSecret'];
-var url = 'https://api.twitch.tv/helix/streams?user_id=125466430&first=1';
-
+var streamsurl = 'https://api.twitch.tv/helix/streams?user_id=125466430&first=1';
+var twitchAccessToken = "";
 
 
 
@@ -15,63 +11,47 @@ console.log('start');
 
 
 function getTwitchAuthorization() {
-    let url = `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`;
+  let authurl = `https://id.twitch.tv/oauth2/token`;
 
+  request.post(
+    authurl,
+    {
+      json: {
+        client_id: clientId,
+        client_secret: clientSecret,
+        grant_type: "client_credentials"
+      }
+    },
+    function(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log(body["access_token"]);
+        twitchAccessToken = body["access_token"];
+        searchTwitchStreams();
+      }
+    }
+  );
+}
 
-    https.post(url, res => {
-      let data = '';
-      res.on('data', chunk => {
-        data += chunk;
-      });
-      res.on('end', () => {
-        data = JSON.parse(data);
-        console.log(data);
-      })
-    }).on('error', err => {
-      console.log(err.message);
-    })
-
-
-
-
-
-
-  
-  // // return fetch(url, { method: 'post'});
-  //   return fetch(url, { method: 'post'}, function(error, meta, body){
-
-  //     console.log(meta);
-  //     // console.log(error.toString());
-      
-  //     console.log(body.toString());
-  //     return body;
-
-
-
-
-      
-  //   });
-
-
-  
-    // return fetch(url, {
-    // method: "POST",
-    // })
-    // .then((res) => res.json())
-    // .then((data) => {
-    //     return data;
-    // });
+function searchTwitchStreams() {
+  request.get(
+    streamsurl, {
+      auth: {
+        bearer: twitchAccessToken,
+        client_id: clientId
+      }
+    },
+    function(error, response, body) {
+      console.log(body);
+      if (!error && response.statusCode == 200) {
+        console.log(body);
+      }
+    }
+  )
 }
 
 
 console.log(getTwitchAuthorization());
 
-
-
-
-// fetch(url, function(error, meta, body){
-//     console.log(body.toString());
-// });
 
 console.log('It worked hopefully');
 
