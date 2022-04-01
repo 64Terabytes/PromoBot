@@ -1,11 +1,17 @@
 {
-    "channels": [
+    "DiscordChannels": [
         952482286555783209,
         864044225348108298
     ],
-  "users": [
-        "jakefueledbyrandom",
-        "xqcow",
-        "flopolol"
-    ]
+    "TwitchUsers": {
+        "jakefueledbyrandom": {
+          "is_live": false
+        },
+        "xqcow":{
+          "is_live": false
+        },
+        "flopolol": {
+          "is_live": false
+        }
+    }
 }

@@ -1,10 +1,17 @@
 const request = require('request');
+const fetch = import('node-fetch');
+const fs = require('fs');
+global.Headers = fetch.Headers;
 const clientId = process.env['twitchClientID'];
 const clientSecret = process.env['twitchClientSecret'];
-var streamsurl = 'https://api.twitch.tv/helix/streams?user_id=125466430&first=1';
+var streamsurl = 'https://api.twitch.tv/helix/search/channels?client_id=' + clientId + '&first=1&query=';
 var twitchAccessToken = "";
 
+var data = fs.readFileSync('data.json');
+data = JSON.parse(data);
 
+
+// console.log(data);
 
 console.log('start');
 
@@ -33,16 +40,33 @@ function getTwitchAuthorization() {
 }
 
 function searchTwitchStreams() {
-  request.get(
-    streamsurl, {
-      auth: {
-        bearer: twitchAccessToken,
-        client_id: clientId
-      }
-    },
+  for (const twitchUser in data.TwitchUsers) {
+    console.log(twitchUser);
+    console.log(data.TwitchUsers[twitchUser]['is_live']);
+    // Copy the URL and add the username to the end
+
+    // Call searchTwitchStream with the url
+
+    // Console log the results eventually trun into discord message
+
+
+    
+  }
+}
+
+function searchTwitchStream(url) {
+  const options = {
+    url: url,
+    headers: {
+      'Client-Id': clientId,
+      'Authorization': 'Bearer ' + twitchAccessToken
+    }
+  };
+  request(
+    options,
     function(error, response, body) {
-      console.log(body);
       if (!error && response.statusCode == 200) {
+        // Return body
         console.log(body);
       }
     }
