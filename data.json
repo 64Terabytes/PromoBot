@@ -1,17 +1,1 @@
-{
-    "DiscordChannels": [
-        952482286555783209,
-        864044225348108298
-    ],
-    "TwitchUsers": {
-        "jakefueledbyrandom": {
-          "is_live": false
-        },
-        "xqcow":{
-          "is_live": false
-        },
-        "flopolol": {
-          "is_live": false
-        }
-    }
-}
+{"DiscordChannels":[952482286555783200,864044225348108300],"TwitchUsers":{"jakefueledbyrandom":{"is_live":false},"xqcow":{"is_live":true},"flopolol":{"is_live":false}},"messages":["Back online"]}
